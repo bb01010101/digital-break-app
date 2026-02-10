@@ -7,13 +7,16 @@ module.exports = function (api) {
       [
         "@tamagui/babel-plugin",
         {
-          components: ["tamagui", "@tamagui-extras/core", "@tamagui-extras/form"],
+          components: [
+            "tamagui",
+            "@tamagui-extras/core",
+            "@tamagui-extras/form",
+          ],
           config: "./tamagui.config.ts",
           logTimings: true,
         },
       ],
-      // NOTE: this is only necessary if you are using reanimated for animations
-      "react-native-reanimated/plugin",
+      // NOTE: reanimated plugin removed - auto-configured by babel-preset-expo in SDK 54+
     ],
   };
 };

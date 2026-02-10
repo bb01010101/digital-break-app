@@ -1,6 +1,7 @@
-import { Keyboard, TouchableWithoutFeedback } from "react-native";
-import Constants, { AppOwnership } from "expo-constants";
 import { useFocusEffect } from "@react-navigation/native";
+import Constants, { AppOwnership } from "expo-constants";
+import React from "react";
+import { Keyboard, TouchableWithoutFeedback } from "react-native";
 import { View } from "tamagui";
 
 const isRunningInExpoGo = Constants.appOwnership === AppOwnership.Expo;
@@ -33,7 +34,9 @@ export const useSoftKeyboardEffect = () => {
   });
 };
 
-export const DismissKeyboard = ({ children }: { children: JSX.Element }) => (
+export const DismissKeyboard = (
+  { children }: { children: React.ReactNode }
+) => (
   <TouchableWithoutFeedback
     onPress={() => {
       Keyboard.dismiss();

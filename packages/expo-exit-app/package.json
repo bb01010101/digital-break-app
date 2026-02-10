@@ -5,7 +5,7 @@
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
-    "build": "expo-module build",
+    "build": "EXPO_NONINTERACTIVE=1 expo-module build",
     "clean": "expo-module clean",
     "lint": "expo-module lint",
     "test": "expo-module test",
@@ -30,9 +30,9 @@
   "homepage": "https://github.com/lukesthl/digital-break-app#readme",
   "dependencies": {},
   "devDependencies": {
-    "@types/react": "^18.2.55",
-    "expo-module-scripts": "^3.4.1",
-    "expo-modules-core": "^1.11.8"
+    "@types/react": "~19.0.0",
+    "expo-module-scripts": "~5.0.8",
+    "expo-modules-core": "~3.0.29"
   },
   "peerDependencies": {
     "expo": "*",

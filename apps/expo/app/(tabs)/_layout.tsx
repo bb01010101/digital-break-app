@@ -1,20 +1,24 @@
-import { Tabs } from "expo-router";
 import { BarChart2, LayoutGrid } from "@tamagui/lucide-icons";
-import { observer } from "mobx-react-lite";
+import { Tabs } from "expo-router";
 import { SizableText } from "tamagui";
 
 export const unstable_settings = {
   initialRouteName: "index",
 };
 
-const OverviewLayout = observer(() => {
+const OverviewLayout = () => {
   return (
     <Tabs screenOptions={{ tabBarStyle: { minHeight: 80 } }}>
       <Tabs.Screen
         name="overview"
         options={{
           tabBarIcon: ({ color, focused }) => (
-            <BarChart2 size={20} color={color} strokeWidth={focused ? 2.5 : undefined} style={{ marginTop: 8 }} />
+            <BarChart2
+              size={20}
+              color={color}
+              strokeWidth={focused ? 2.5 : undefined}
+              style={{ marginTop: 8 }}
+            />
           ),
           tabBarLabel: ({ color, focused, position }) => (
             <SizableText
@@ -39,7 +43,12 @@ const OverviewLayout = observer(() => {
         name="apps"
         options={{
           tabBarIcon: ({ color, focused }) => (
-            <LayoutGrid size={20} color={color} strokeWidth={focused ? 2.5 : undefined} style={{ marginTop: 8 }} />
+            <LayoutGrid
+              size={20}
+              color={color}
+              strokeWidth={focused ? 2.5 : undefined}
+              style={{ marginTop: 8 }}
+            />
           ),
           tabBarLabel: ({ color, focused, position }) => (
             <SizableText
@@ -62,6 +71,6 @@ const OverviewLayout = observer(() => {
       />
     </Tabs>
   );
-});
+};
 
 export default OverviewLayout;
