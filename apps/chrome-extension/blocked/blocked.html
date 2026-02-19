@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Break — Site Blocked</title>
+    <link rel="stylesheet" href="blocked.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Glow orbs -->
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+
+        <!-- Shield icon -->
+        <div class="shield-icon">🛡️</div>
+
+        <h1 class="title">Site Blocked</h1>
+        <p class="domain-text" id="domainText">—</p>
+        <p class="subtitle">Digital Break is keeping you focused.</p>
+
+        <!-- Timer Mode -->
+        <div id="timerMode" class="mode-section" style="display:none;">
+            <div class="timer-ring">
+                <svg viewBox="0 0 120 120">
+                    <circle cx="60" cy="60" r="54" class="ring-bg" />
+                    <circle cx="60" cy="60" r="54" class="ring-progress" id="timerRing" />
+                </svg>
+                <span class="timer-text" id="timerText">30</span>
+            </div>
+            <p class="mode-hint">Wait for the timer to unlock</p>
+            <button id="timerUnlockBtn" class="btn-unlock" disabled>🔒 Locked</button>
+        </div>
+
+        <!-- Challenge Mode -->
+        <div id="challengeMode" class="mode-section" style="display:none;">
+            <div class="challenge-card">
+                <span class="challenge-label" id="challengeLabel">Solve to unlock</span>
+                <div class="challenge-question" id="challengeQuestion">—</div>
+                <input type="text" id="challengeInput" class="challenge-input" placeholder="Your answer"
+                    autocomplete="off">
+                <button id="challengeSubmit" class="btn-unlock">Submit</button>
+                <p class="challenge-feedback" id="challengeFeedback"></p>
+            </div>
+        </div>
+
+        <!-- Friend 2FA Mode -->
+        <div id="friend2faMode" class="mode-section" style="display:none;">
+            <div class="challenge-card">
+                <span class="challenge-label">🤝 Friend 2FA</span>
+                <p class="friend-desc">Ask a friend for the unlock code.</p>
+                <div class="code-display" id="codeDisplay">??? ???</div>
+                <p class="friend-hint">Share this screen with a friend — they'll see the code below.</p>
+                <div class="friend-reveal">
+                    <button id="revealCodeBtn" class="btn-secondary">👀 I'm the friend — reveal code</button>
+                    <div id="revealedCode" class="revealed-code" style="display:none;"></div>
+                </div>
+                <input type="text" id="friend2faInput" class="challenge-input" placeholder="Enter 6-digit code"
+                    maxlength="7" autocomplete="off">
+                <button id="friend2faSubmit" class="btn-unlock">Unlock</button>
+                <p class="challenge-feedback" id="friend2faFeedback"></p>
+            </div>
+        </div>
+
+        <!-- Go Back button -->
+        <button id="goBackBtn" class="btn-secondary" style="margin-top: 16px;">← Go Back</button>
+    </div>
+
+    <script src="blocked.js"></script>
+</body>
+
+</html>

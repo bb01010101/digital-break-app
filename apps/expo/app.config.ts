@@ -2,12 +2,12 @@ import type { ConfigContext, ExpoConfig } from "expo/config";
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: "Digital Break",
-  slug: "digitalbreak",
+  name: "DigitalBreak",
+  slug: "DigitalBreak",
   version: "1.0.2",
   orientation: "portrait",
   icon: "./assets/images/default.png",
-  scheme: "digitalbreak",
+  scheme: "DigitalBreak",
   userInterfaceStyle: "automatic",
   splash: {
     image: "./assets/images/digital-break-hourglass-icon.png",
@@ -53,6 +53,13 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         ios: {
           deploymentTarget: "16.0",
         },
+      },
+    ],
+    [
+      "react-native-device-activity",
+      {
+        appleTeamId: "3X5J8LXMDM",
+        appGroup: "group.com.lukesthl.digitalbreak",
       },
     ],
     [

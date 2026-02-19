@@ -1,9 +1,17 @@
 {
-  "platforms": ["ios", "android", "web"],
-  "ios": {
-    "modules": ["ExpoExitAppModule"]
+  "platforms": [
+    "apple",
+    "android",
+    "web"
+  ],
+  "apple": {
+    "modules": [
+      "ExpoExitAppModule"
+    ]
   },
   "android": {
-    "modules": ["expo.modules.exitapp.ExpoExitAppModule"]
+    "modules": [
+      "expo.modules.exitapp.ExpoExitAppModule"
+    ]
   }
 }

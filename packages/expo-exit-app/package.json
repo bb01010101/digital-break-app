@@ -1,5 +1,5 @@
 {
-  "name": "@acme/expo-exit-app",
+  "name": "expo-exit-app",
   "version": "0.1.0",
   "description": "Exit,close,kill,shutdown app completely for React Native on iOS.",
   "main": "build/index.js",

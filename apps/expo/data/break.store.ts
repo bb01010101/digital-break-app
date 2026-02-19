@@ -1,7 +1,7 @@
 import Constants, { AppOwnership } from "expo-constants";
 import { router } from "expo-router";
 import { makeAutoObservable } from "mobx";
-import * as ExpoExitApp from "../../../packages/expo-exit-app";
+import { Platform } from "react-native";
 import { AppStatisticsStore } from "./app.statistics";
 import type { App } from "./apps.store";
 import { AppsStore } from "./apps.store";
@@ -81,7 +81,7 @@ export class BreakStoreSingleton {
     }
   }
 
-  public async openApp(): Promise {
+  public async openApp(): Promise<void> {
     if (!this.app) {
       throw new Error("App not initialized");
     }
@@ -101,7 +101,7 @@ export class BreakStoreSingleton {
     router.replace("/");
   }
 
-  public async exitApp(): Promise {
+  public async exitApp(): Promise<void> {
     if (!this.app || isRunningInExpoGo) {
       throw new Error("App not initialized");
     }
@@ -110,7 +110,10 @@ export class BreakStoreSingleton {
       type: "app-close",
     });
     await ShortCutPayload.clear();
-    ExpoExitApp.exit();
+    if (Platform.OS !== "web") {
+      const ExpoExitApp = require("expo-exit-app");
+      ExpoExitApp.exit();
+    }
   }
 
   public getRandomBreakMessage(): string {

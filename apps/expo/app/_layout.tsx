@@ -15,7 +15,7 @@ import config from "../tamagui.config";
 
 export const unstable_settings = {
   // Ensure any route can link back to `/`
-  initialRouteName: "/overview",
+  initialRouteName: "/feed",
 };
 
 export { ErrorBoundary } from "expo-router";
@@ -101,23 +101,23 @@ function RootNavigator() {
 
   const navigationTheme = theme === "light"
     ? {
-        ...DefaultTheme,
-        colors: {
-          ...DefaultTheme.colors,
-          background: "#FFFFFF",
-          text: tamaguiTheme.text11?.val as string,
-          primary: tamaguiTheme.text11?.val as string,
-          border: tamaguiTheme.grey3?.val as string,
-        },
-        fonts: DefaultTheme.fonts,
-      }
+      ...DefaultTheme,
+      colors: {
+        ...DefaultTheme.colors,
+        background: "#FFFFFF",
+        text: tamaguiTheme.text11?.val as string,
+        primary: tamaguiTheme.text11?.val as string,
+        border: tamaguiTheme.grey3?.val as string,
+      },
+      fonts: DefaultTheme.fonts,
+    }
     : {
-        ...DarkTheme,
-        colors: {
-          ...DarkTheme.colors,
-        },
-        fonts: DarkTheme.fonts,
-      };
+      ...DarkTheme,
+      colors: {
+        ...DarkTheme.colors,
+      },
+      fonts: DarkTheme.fonts,
+    };
 
   return (
     <NavigationThemeProvider value={navigationTheme}>

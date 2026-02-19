@@ -1,10 +1,14 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { Check } from "@tamagui/lucide-icons";
-import { getAppIcon, setAppIcon } from "expo-dynamic-app-icon";
 import { useState } from "react";
 import type { ImageURISource } from "react-native";
+import { Platform } from "react-native";
 import { Image, ListItem, View, YGroup, YStack } from "tamagui";
 import { Container } from "../../components/container";
+
+const dynamicIcon = Platform.OS !== "web"
+  ? require("expo-dynamic-app-icon") as { getAppIcon: () => string; setAppIcon: (name: string) => void }
+  : { getAppIcon: () => "default", setAppIcon: (_name: string) => { } };
 
 const DarkIcon = require("../../assets/images/dark.png") as ImageURISource;
 const DefaultIcon =
@@ -30,11 +34,11 @@ const icons = [
 ] as const;
 
 const AppIcon = () => {
-  const [activeIcon, setActiveIcon] = useState(getAppIcon().toLowerCase());
+  const [activeIcon, setActiveIcon] = useState(dynamicIcon.getAppIcon().toLowerCase());
 
   const setIcon = (value: (typeof icons)[number]["value"]) => {
     setActiveIcon(value);
-    setAppIcon(value);
+    dynamicIcon.setAppIcon(value);
   };
 
   return (

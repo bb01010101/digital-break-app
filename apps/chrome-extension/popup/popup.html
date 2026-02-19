@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=400, initial-scale=1.0">
+  <title>Digital Break</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <img src="../icons/icon-48.png" alt="Digital Break" class="header-icon">
+      <h1>Digital Break</h1>
+    </div>
+    <button id="settingsBtn" class="icon-btn" title="Settings">⚙️</button>
+  </header>
+
+  <!-- Stats Banner -->
+  <section class="stats-banner">
+    <div class="stat-card">
+      <span class="stat-value" id="blockedCount">0</span>
+      <span class="stat-label">Blocked Today</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value" id="sitesActive">0</span>
+      <span class="stat-label">Sites Active</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value" id="timeToday">0m</span>
+      <span class="stat-label">Time Saved</span>
+    </div>
+  </section>
+
+  <!-- Add Site -->
+  <section class="add-site">
+    <input type="text" id="newDomain" placeholder="Add website (e.g. instagram.com)" autocomplete="off">
+    <select id="newMode">
+      <option value="timer">⏱ Timer</option>
+      <option value="challenge">🧩 Challenge</option>
+      <option value="friend2fa">🤝 Friend 2FA</option>
+    </select>
+    <button id="addSiteBtn" class="btn-primary">+ Add</button>
+  </section>
+
+  <!-- Blocked Sites List -->
+  <section class="sites-list" id="sitesList">
+    <!-- populated by JS -->
+  </section>
+
+  <!-- Today's Usage -->
+  <section class="usage-section">
+    <h3>Today's Browsing</h3>
+    <div id="usageList" class="usage-list">
+      <!-- populated by JS -->
+    </div>
+  </section>
+
+  <script src="popup.js"></script>
+</body>
+</html>

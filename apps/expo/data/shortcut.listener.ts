@@ -28,19 +28,20 @@ export const listenForShortcut = async (): Promise<{
                 event: appPayload.event,
               });
             } else {
-              throw new Error("no app");
+              // Just wait for the next interval tick
+              if (tryCount >= MAX_TRY_COUNT) {
+                console.log("interval after max try", JSON.stringify(intervalIds));
+                clearShortcutListener();
+                reject("max try count reached");
+              } else {
+                tryCount++;
+              }
             }
           })
           .catch((error) => {
-            console.log(JSON.stringify(error));
-            if (tryCount >= MAX_TRY_COUNT) {
-              console.log("interval after max try", JSON.stringify(intervalIds));
-              clearShortcutListener();
-              reject("max try count reached");
-            } else {
-              tryCount++;
-              reject("first try reject, trying in background");
-            }
+            console.error("[shortcut.listener] Unexpected error:", error);
+            clearShortcutListener();
+            reject(error);
           });
       } catch (error) {
         console.log(error);

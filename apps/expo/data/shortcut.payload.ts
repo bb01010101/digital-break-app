@@ -14,9 +14,19 @@ class ShortCutPayloadSingleton {
   private dataPath = `${this.appPath}/Library/Application Support/${appConfig.bundleIdentifier}/RCTAsyncLocalStorage_V1/appintent.json`;
 
   private loadAppIntentPayload = async (): Promise<IPayload | undefined> => {
-    const string = await FileSystem.readAsStringAsync(this.dataPath);
-    const payload = JSON.parse(string) as IPayload;
-    return payload;
+    try {
+      const info = await FileSystem.getInfoAsync(this.dataPath);
+      if (!info.exists) {
+        console.log("[ShortCutPayload] File does not exist");
+        return undefined;
+      }
+      const string = await FileSystem.readAsStringAsync(this.dataPath);
+      const payload = JSON.parse(string) as IPayload;
+      return payload;
+    } catch (error) {
+      console.log("[ShortCutPayload] Error reading payload:", error);
+      return undefined;
+    }
   };
 
   public getPayload = async (): Promise<IPayload | null> => {

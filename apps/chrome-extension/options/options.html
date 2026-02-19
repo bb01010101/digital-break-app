@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Break — Settings</title>
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #0a0e1a;
+            --card: #111827;
+            --border: rgba(96, 165, 250, 0.15);
+            --text: #f1f5f9;
+            --dim: #94a3b8;
+            --muted: #64748b;
+            --accent: #60a5fa;
+            --accent2: #a78bfa;
+            --green: #34d399;
+            --red: #f87171;
+            --gradient: linear-gradient(135deg, #60a5fa, #a78bfa);
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, sans-serif;
+            padding: 40px;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 28px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            margin-bottom: 32px;
+        }
+
+        .section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .section h2 {
+            font-size: 14px;
+            color: var(--dim);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+
+        .field {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .field:last-child {
+            border-bottom: none;
+        }
+
+        .field-label {
+            font-size: 14px;
+        }
+
+        .field-desc {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        select,
+        input[type="number"] {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            padding: 8px 12px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        select:focus,
+        input:focus {
+            border-color: var(--accent);
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background: var(--gradient);
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .btn-outline {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--dim);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--text);
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .export-area {
+            width: 100%;
+            min-height: 80px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            padding: 12px;
+            font-family: monospace;
+            font-size: 11px;
+            resize: vertical;
+            margin-top: 8px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--green);
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            display: none;
+            z-index: 100;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>⚙️ Digital Break Settings</h1>
+    <p class="subtitle">Configure your blocking preferences</p>
+
+    <div class="section">
+        <h2>General</h2>
+        <div class="field">
+            <div>
+                <div class="field-label">Challenge Difficulty</div>
+                <div class="field-desc">Harder challenges = more friction</div>
+            </div>
+            <select id="difficulty">
+                <option value="easy">Easy</option>
+                <option value="medium" selected>Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+        </div>
+        <div class="field">
+            <div>
+                <div class="field-label">Default Timer (seconds)</div>
+                <div class="field-desc">Wait time for timer-mode blocks</div>
+            </div>
+            <input type="number" id="defaultTimer" value="30" min="5" max="300" style="width:80px">
+        </div>
+        <div class="field">
+            <div>
+                <div class="field-label">Unlock Duration (minutes)</div>
+                <div class="field-desc">How long a site stays unlocked after passing</div>
+            </div>
+            <input type="number" id="unlockDuration" value="5" min="1" max="60" style="width:80px">
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Import / Export</h2>
+        <p class="field-desc">Export your settings and blocked sites, or import from another device.</p>
+        <textarea class="export-area" id="exportArea" placeholder="Click Export to see your data..."></textarea>
+        <div class="actions">
+            <button class="btn" id="exportBtn">Export</button>
+            <button class="btn btn-outline" id="importBtn">Import</button>
+            <button class="btn btn-outline" id="resetBtn"
+                style="margin-left:auto; border-color: var(--red); color: var(--red);">Reset All</button>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">Saved!</div>
+
+    <script>
+        const $ = id => document.getElementById(id);
+
+        async function getState() {
+            return new Promise(resolve => chrome.runtime.sendMessage({ type: 'GET_STATE' }, resolve));
+        }
+
+        async function init() {
+            const state = await getState();
+            if (state?.settings) {
+                $('difficulty').value = state.settings.challengeDifficulty || 'medium';
+                $('defaultTimer').value = state.settings.defaultTimerSeconds || 30;
+                $('unlockDuration').value = state.settings.unlockDurationMinutes || 5;
+            }
+        }
+
+        $('exportBtn').addEventListener('click', async () => {
+            const state = await getState();
+            $('exportArea').value = JSON.stringify(state, null, 2);
+            toast('Exported!');
+        });
+
+        $('importBtn').addEventListener('click', async () => {
+            try {
+                const data = JSON.parse($('exportArea').value);
+                await chrome.storage.local.set({ state: data });
+                toast('Imported!');
+                setTimeout(() => location.reload(), 500);
+            } catch {
+                toast('Invalid JSON');
+            }
+        });
+
+        $('resetBtn').addEventListener('click', async () => {
+            if (confirm('Reset all settings and blocked sites?')) {
+                await chrome.storage.local.clear();
+                toast('Reset!');
+                setTimeout(() => location.reload(), 500);
+            }
+        });
+
+        // Auto-save on change
+        for (const id of ['difficulty', 'defaultTimer', 'unlockDuration']) {
+            $(id).addEventListener('change', async () => {
+                const state = await getState();
+                state.settings = {
+                    ...state.settings,
+                    challengeDifficulty: $('difficulty').value,
+                    defaultTimerSeconds: parseInt($('defaultTimer').value, 10),
+                    unlockDurationMinutes: parseInt($('unlockDuration').value, 10),
+                };
+                await chrome.storage.local.set({ state });
+                toast('Saved!');
+            });
+        }
+
+        function toast(msg) {
+            const el = $('toast');
+            el.textContent = msg;
+            el.style.display = 'block';
+            setTimeout(() => el.style.display = 'none', 1500);
+        }
+
+        init();
+    </script>
+</body>
+
+</html>

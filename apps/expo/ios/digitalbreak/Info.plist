@@ -7,7 +7,7 @@
     <key>CFBundleDevelopmentRegion</key>
     <string>$(DEVELOPMENT_LANGUAGE)</string>
     <key>CFBundleDisplayName</key>
-    <string>Digital Break</string>
+    <string>DigitalBreak</string>
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
     <key>CFBundleIcons</key>
@@ -107,7 +107,7 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>digitalbreak</string>
+          <string>DigitalBreak</string>
           <string>com.lukesthl.digitalbreak</string>
         </array>
       </dict>

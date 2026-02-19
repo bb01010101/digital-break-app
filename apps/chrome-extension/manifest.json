@@ -1,0 +1,45 @@
+{
+    "manifest_version": 3,
+    "name": "Digital Break",
+    "version": "1.0.0",
+    "description": "Block distracting websites. Earn your screen time with challenges.",
+    "permissions": [
+        "storage",
+        "alarms",
+        "tabs",
+        "activeTab",
+        "declarativeNetRequest",
+        "declarativeNetRequestFeedback",
+        "webNavigation"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "action": {
+        "default_popup": "popup/popup.html",
+        "default_icon": {
+            "16": "icons/icon-16.png",
+            "48": "icons/icon-48.png",
+            "128": "icons/icon-128.png"
+        }
+    },
+    "background": {
+        "service_worker": "background/service-worker.js",
+        "type": "module"
+    },
+    "options_page": "options/options.html",
+    "icons": {
+        "16": "icons/icon-16.png",
+        "48": "icons/icon-48.png",
+        "128": "icons/icon-128.png"
+    },
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "id": "blocking_rules",
+                "enabled": true,
+                "path": "rules/blocking-rules.json"
+            }
+        ]
+    }
+}

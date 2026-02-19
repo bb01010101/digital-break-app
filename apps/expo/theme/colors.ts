@@ -115,6 +115,29 @@ export const colors = {
   },
 };
 
+export const accentColors = {
+  accentBlue: "#4F8CFF",
+  accentPurple: "#A855F7",
+  accentGreen: "#34D399",
+  accentOrange: "#FB923C",
+  accentRed: "#F43F5E",
+  accentCyan: "#22D3EE",
+  glassBg: "rgba(255,255,255,0.06)",
+  glassStroke: "rgba(255,255,255,0.12)",
+  glassBgLight: "rgba(0,0,0,0.03)",
+  glassStrokeLight: "rgba(0,0,0,0.08)",
+  surfaceElevated: "#1E1E2E",
+  surfacePrimary: "#0F0F1A",
+};
+
+export const gradients = {
+  primary: ["#4F8CFF", "#A855F7"] as const,
+  success: ["#34D399", "#22D3EE"] as const,
+  danger: ["#F43F5E", "#FB923C"] as const,
+  premium: ["#A855F7", "#EC4899"] as const,
+  dark: ["#1E1E2E", "#0F0F1A"] as const,
+};
+
 export const logoColors = {
   "Berkeley Blue": "#012D59",
   "Blue Green": "#02A2D4",

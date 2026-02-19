@@ -39,15 +39,20 @@ class SettingsStoreSingleton {
         if (!file) {
           throw new Error("No file uri");
         }
-        const fileContents = await FileSystem.readAsStringAsync(file.uri);
-        const data = JSON.parse(fileContents) as {
-          apps: AppsStore["apps"];
-          appStatistics: AppStatisticsStore["events"];
-        };
-        await Promise.all([
-          this.appsStore.importApps(data.apps),
-          this.appStatisticsStore.importEvents(data.appStatistics),
-        ]);
+        const info = await FileSystem.getInfoAsync(file.uri);
+        if (info.exists) {
+          const fileContents = await FileSystem.readAsStringAsync(file.uri);
+          const data = JSON.parse(fileContents) as {
+            apps: AppsStore["apps"];
+            appStatistics: AppStatisticsStore["events"];
+          };
+          await Promise.all([
+            this.appsStore.importApps(data.apps),
+            this.appStatisticsStore.importEvents(data.appStatistics),
+          ]);
+        } else {
+          console.log("[SettingsStore] Settings file does not exist at:", file.uri);
+        }
       } else {
         throw new Error("No file selected");
       }
